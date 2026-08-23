@@ -1,26 +1,128 @@
 @import "tailwindcss";
 
+@theme {
+  /* ---------- Font ---------- */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  /* ---------- Page / surface backgrounds ---------- */
+  --color-background: #FAFAF9;
+  --color-surface: #FFFFFF;
+  --color-surface-secondary: #F5F5F4;
+  --color-surface-tertiary: #EFEEEC;
+  --color-surface-muted: #E7E5E4;
+
+  /* ---------- Borders ---------- */
+  --color-border: #E5E3E0;
+  --color-border-light: #EFEDEA;
+  --color-border-muted: #D9D6D2;
+
+  /* ---------- Text colors ---------- */
+  --color-text-primary: #18181B;
+  --color-text-secondary: #52525B;
+  --color-text-muted: #8C8A86;
+  --color-text-primary-dark: #FFFFFF;
+  --color-text-secondary-dark: #D4D4D8;
+  --color-text-muted-dark: #A1A1AA;
+
+  /* ---------- Primary accent (Indigo) ---------- */
+  --color-primary: #5B5FEF;
+  --color-primary-dark: #4548C9;
+  --color-primary-light: #EEF0FE;
+  --color-primary-muted: #C7CBFB;
+  --color-primary-foreground: #FFFFFF;
+
+  /* ---------- Semantic: success ---------- */
+  --color-success: #1D8A5F;
+  --color-success-foreground: #FFFFFF;
+  --color-success-light: #E3F5EC;
+
+  /* ---------- Semantic: info ---------- */
+  --color-info: #2C6ECB;
+  --color-info-foreground: #FFFFFF;
+  --color-info-light: #E8F1FC;
+
+  /* ---------- Semantic: warning ---------- */
+  --color-warning: #B45309;
+  --color-warning-foreground: #FFFFFF;
+  --color-warning-light: #FDF1E1;
+
+  /* ---------- Semantic: error ---------- */
+  --color-error: #C0362C;
+  --color-error-foreground: #FFFFFF;
+  --color-error-light: #FBEAE8;
+
+  /* ---------- Session screen (fullscreen Focus / Break states) ---------- */
+  /* Reserved exclusively for /session. Never mixed with the chrome palette above. */
+  --color-focus-bg: #000000;
+  --color-focus-fg: #FFFFFF;
+  --color-focus-fg-muted: rgba(255, 255, 255, 0.55);
+  --color-break: #D98C82;
+  --color-break-foreground: #1A0E0C;
+  --color-break-muted: rgba(217, 140, 130, 0.6);
+
+  /* ---------- Overlays ---------- */
+  --color-overlay: rgba(24, 24, 27, 0.5);
+  --color-overlay-light: rgba(24, 24, 27, 0.25);
+  --color-overlay-dark: rgba(0, 0, 0, 0.7);
+
+  /* ---------- Border radii ---------- */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* ---------- Spacing ---------- */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+
+  /* ---------- Containers / Max Widths ---------- */
+  --container-sm: 24rem;
+  --container-md: 28rem;
+  --container-lg: 32rem;
+  --container-xl: 36rem;
+  --container-2xl: 42rem;
+  --container-3xl: 48rem;
+  --container-4xl: 56rem;
+  --container-5xl: 64rem;
+}
+
+/* Values Tailwind v4 cannot derive from @theme (composite shadows) */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --shadow-card: 0 1px 2px rgba(24, 24, 27, 0.04), 0 1px 3px rgba(24, 24, 27, 0.06);
+  --shadow-card-hover: 0 4px 10px rgba(24, 24, 27, 0.08), 0 2px 4px rgba(24, 24, 27, 0.06);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
 }
+
+/* react-calendar-heatmap SVG fill scale classes */
+.heatmap-scale-0 { fill: var(--color-surface-muted); }
+.heatmap-scale-1 { fill: var(--color-primary-light); }
+.heatmap-scale-2 { fill: var(--color-primary-muted); }
+.heatmap-scale-3 { fill: var(--color-primary); }
+
+/* Max width container overrides to prevent --spacing-* token collision */
+@layer utilities {
+  .max-w-xs { max-width: 20rem; }
+  .max-w-sm { max-width: 24rem; }
+  .max-w-md { max-width: 28rem; }
+  .max-w-lg { max-width: 32rem; }
+  .max-w-xl { max-width: 36rem; }
+  .max-w-2xl { max-width: 42rem; }
+  .max-w-3xl { max-width: 48rem; }
+  .max-w-4xl { max-width: 56rem; }
+  .max-w-5xl { max-width: 64rem; }
+  .max-w-6xl { max-width: 72rem; }
+  .max-w-7xl { max-width: 80rem; }
+}
+
+
