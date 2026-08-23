@@ -110,6 +110,15 @@ body {
 .heatmap-scale-2 { fill: var(--color-primary-muted); }
 .heatmap-scale-3 { fill: var(--color-primary); }
 
+.react-calendar-heatmap text {
+  font-size: 8px;
+  fill: var(--color-text-muted);
+}
+.react-calendar-heatmap rect {
+  rx: 2px;
+  ry: 2px;
+}
+
 /* Max width container overrides to prevent --spacing-* token collision */
 @layer utilities {
   .max-w-xs { max-width: 20rem; }

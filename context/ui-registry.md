@@ -108,19 +108,19 @@ This file is a living record of every UI component actually built in Focaliser. 
 #### TopNav
 **File:** `components/nav/TopNav.tsx`
 **Purpose:** Global header navigation bar providing logo and primary tab navigation across chrome pages, automatically omitted on `/session`.
-**Last updated:** 2026-08-22
+**Last updated:** 2026-08-23
 
 | Property | Class |
 |---|---|
-| Container | `bg-surface border-b border-border h-16 w-full` |
-| Inner wrapper | `max-w-5xl mx-auto px-xl h-full flex items-center justify-between` |
-| Logo text | `text-text-primary font-semibold text-base tracking-tight hover:opacity-90` |
-| Tab link (inactive) | `text-text-secondary hover:text-text-primary text-sm font-medium transition-colors` |
-| Tab link (active, planned) | `text-primary font-semibold border-b-2 border-primary` |
+| Container | `bg-surface border-b border-border h-16 w-full sticky top-0 z-40` |
+| Inner wrapper | `max-w-5xl mx-auto px-lg md:px-xl h-full flex items-center justify-between` |
+| Logo text | `text-text-primary font-semibold text-base tracking-tight hover:opacity-90 transition-opacity` |
+| Tab link (inactive) | `h-full inline-flex items-center text-sm transition-colors border-b-2 border-transparent text-text-secondary hover:text-text-primary font-medium` |
+| Tab link (active) | `h-full inline-flex items-center text-sm transition-colors border-b-2 border-primary text-primary font-semibold` |
 
 **Pattern notes:**
-- Client Component using `usePathname()`. Returns `null` when `pathname === '/session'` so the session screen remains zero-chrome.
-- Always matches the standard `max-w-5xl mx-auto px-xl` horizontal grid constraint of page wrappers below it.
+- Client Component using `usePathname()`. Returns `null` when `pathname === '/session'`, `/login`, or `/signup` so distraction-free and auth flows remain zero-chrome.
+- Matches `max-w-5xl mx-auto px-lg md:px-xl` responsive grid constraint of page wrappers below it.
 
 
 ---
@@ -185,16 +185,50 @@ This file is a living record of every UI component actually built in Focaliser. 
 `app/session/page.tsx`, `components/timer/`
 
 #### FocusCountdown
-`components/timer/FocusCountdown.tsx`
-<!-- ← Agent fills this in when built -->
+**File:** `components/timer/FocusCountdown.tsx`
+**Purpose:** Fullscreen countdown display in pure black (`bg-focus-bg`) with large white numerals (`text-focus-fg`), hover blur effect, and ghost buttons ("Take a break?", "Stop session?").
+**Last updated:** 2026-08-23
+
+| Property | Class |
+|---|---|
+| Screen container | `w-screen h-screen bg-focus-bg flex flex-col items-center justify-center relative select-none overflow-hidden` |
+| Numerals (default) | `font-mono tabular-nums text-focus-fg font-medium tracking-tight text-[clamp(4rem,18vw,14rem)] leading-none blur-none opacity-100 scale-100` |
+| Numerals (hovered) | `blur-md opacity-30 scale-[0.98]` |
+| Primary action ("Take a break?") | `text-focus-fg-muted hover:text-focus-fg text-base md:text-lg font-medium transition-colors hover:underline underline-offset-8` |
+| Secondary action ("Stop session?") | `text-focus-fg-muted hover:text-focus-fg text-xs md:text-sm font-medium opacity-75 hover:opacity-100 transition-all hover:underline underline-offset-4` |
+
+**Pattern notes:**
+- Framer Motion 200ms fade transition for action overlay on hover.
+- Idle timeout (3 seconds) automatically restores sharp numerals if mouse is idle.
 
 #### BreakStopwatch
-`components/timer/BreakStopwatch.tsx`
-<!-- ← Agent fills this in when built -->
+**File:** `components/timer/BreakStopwatch.tsx`
+**Purpose:** Fullscreen stopwatch display in muted terracotta red (`text-break`) counting up from 0:00 with hover reveal ("Focus again?").
+**Last updated:** 2026-08-23
+
+| Property | Class |
+|---|---|
+| Screen container | `w-screen h-screen bg-focus-bg flex flex-col items-center justify-center relative select-none overflow-hidden` |
+| Numerals (default) | `font-mono tabular-nums text-break font-medium tracking-tight text-[clamp(4rem,18vw,14rem)] leading-none blur-none opacity-100 scale-100` |
+| Numerals (hovered) | `blur-md opacity-30 scale-[0.98]` |
+| Action ("Focus again?") | `text-focus-fg-muted hover:text-focus-fg text-base md:text-lg font-medium transition-colors hover:underline underline-offset-8` |
+
+**Pattern notes:**
+- Stop session control is omitted during break state per product specification.
 
 #### SessionEndAlert
-`components/timer/SessionEndAlert.tsx`
-<!-- ← Agent fills this in when built -->
+**File:** `components/timer/SessionEndAlert.tsx`
+**Purpose:** Gradual 2-second visual pulse alerting session completion before redirecting.
+**Last updated:** 2026-08-23
+
+| Property | Class |
+|---|---|
+| Screen container | `w-screen h-screen bg-focus-bg flex flex-col items-center justify-center relative select-none overflow-hidden` |
+| Pulsing numerals | `font-mono tabular-nums text-focus-fg font-medium tracking-tight text-[clamp(4rem,18vw,14rem)] leading-none` |
+| Animation | `animate={{ opacity: [1, 0.2, 1, 0.2, 1] }}`, transition: `SESSION_END_ALERT_DURATION_MS` (2s), ease: `easeInOut` |
+
+**Pattern notes:**
+- Checks `prefers-reduced-motion` to display static `00:00` without flashing if reduced motion is requested.
 
 ---
 
@@ -202,16 +236,63 @@ This file is a living record of every UI component actually built in Focaliser. 
 `app/analytics/page.tsx`, `components/analytics/`
 
 #### FocusTimeChart
-`components/analytics/FocusTimeChart.tsx`
-<!-- ← Agent fills this in when built -->
+**File:** `components/analytics/FocusTimeChart.tsx`
+**Purpose:** Responsive Recharts bar chart displaying daily focus time in minutes using single series `--color-primary` (`#5B5FEF`).
+**Last updated:** 2026-08-23
+
+| Property | Class |
+|---|---|
+| Card wrapper | `Card` (`flex flex-col gap-md w-full`) |
+| Section header | `text-sm font-semibold uppercase tracking-[0.04em] text-text-secondary` |
+| Axis tick text | `12px font-sans fill-[#8C8A86]` (matches `--color-text-muted`) |
+| Bar fill | `#5B5FEF` (`--color-primary`), `radius={[4, 4, 0, 0]}` |
+| Tooltip | `bg-surface border border-border rounded-md px-md py-xs shadow-[var(--shadow-card)]` |
+
+**Pattern notes:**
+- Disables initial mount animations (`isAnimationActive={false}`) for immediate distraction-free rendering.
 
 #### BreakChart
-`components/analytics/BreakChart.tsx`
-<!-- ← Agent fills this in when built -->
+**File:** `components/analytics/BreakChart.tsx`
+**Purpose:** Responsive Recharts bar chart displaying daily break minutes and counts in `--color-break` (`#D98C82`).
+**Last updated:** 2026-08-23
+
+| Property | Class |
+|---|---|
+| Card wrapper | `Card` (`flex flex-col gap-md w-full`) |
+| Section header | `text-sm font-semibold uppercase tracking-[0.04em] text-text-secondary` |
+| Bar fill | `#D98C82` (`--color-break`), `radius={[4, 4, 0, 0]}` |
+
+**Pattern notes:**
+- Tooltip displays both formatted break duration and count.
 
 #### AveragesSummary
-`components/analytics/AveragesSummary.tsx`
-<!-- ← Agent fills this in when built -->
+**File:** `components/analytics/AveragesSummary.tsx`
+**Purpose:** 4-card glanceable grid summarizing total focus time, average session length, total breaks, and average break duration.
+**Last updated:** 2026-08-23
+
+| Property | Class |
+|---|---|
+| Grid container | `grid grid-cols-2 lg:grid-cols-4 gap-md w-full` |
+| Card item | `Card` (`flex flex-col gap-xs`) |
+| Card title | `text-xs font-semibold uppercase tracking-[0.04em] text-text-secondary` |
+| Stat numeral | `text-3xl font-semibold text-text-primary font-mono tabular-nums leading-tight` |
+| Subtext | `text-xs text-text-muted mt-xs` |
+
+**Pattern notes:**
+- Numerals use `font-mono tabular-nums` for alignment stability.
+
+#### EmptyAnalytics
+**File:** `components/analytics/EmptyAnalytics.tsx`
+**Purpose:** Empty state displayed when no completed sessions exist for the selected period.
+**Last updated:** 2026-08-23
+
+| Property | Class |
+|---|---|
+| Container | `Card` (`flex flex-col items-center justify-center py-3xl px-xl text-center gap-md w-full`) |
+| Icon | `Lucide BarChart2 (size 36 text-text-muted stroke-[1.5])` |
+| Title | `text-base font-semibold text-text-primary` |
+| Helper text | `text-sm text-text-secondary` |
+| CTA Button | `<Button variant="primary">Start a Focus Session</Button>` |
 
 ---
 
@@ -219,16 +300,50 @@ This file is a living record of every UI component actually built in Focaliser. 
 `app/history/page.tsx`, `components/history/`
 
 #### SessionList
-`components/history/SessionList.tsx`
-<!-- ← Agent fills this in when built -->
+**File:** `components/history/SessionList.tsx`
+**Purpose:** Displays chronological focus session logs in a desktop table and collapses to stacked cards on mobile devices.
+**Last updated:** 2026-08-23
+
+| Property | Class |
+|---|---|
+| Table container (desktop) | `hidden md:block w-full overflow-hidden bg-surface border border-border rounded-lg shadow-[var(--shadow-card)]` |
+| Table header | `bg-surface-secondary text-text-secondary text-xs font-semibold uppercase tracking-wide border-b border-border` |
+| Table row | `hover:bg-surface-secondary transition-colors` |
+| Cell padding | `px-md py-sm` |
+| Stacked card list (mobile) | `flex md:hidden flex-col gap-sm` |
+
+**Pattern notes:**
+- Integrates `Badge` component for session statuses (`completed`, `active`, `abandoned`, `on_break`).
+- Formats dates with `date-fns` and numbers with `font-mono`.
 
 #### Heatmap
-`components/history/Heatmap.tsx`
-<!-- ← Agent fills this in when built -->
+**File:** `components/history/Heatmap.tsx`
+**Purpose:** 52-week calendar activity heatmap rendering daily focus time intensity in 4 discrete tints of `--color-primary`.
+**Last updated:** 2026-08-23
+
+| Property | Class |
+|---|---|
+| Card wrapper | `Card` (`flex flex-col gap-md w-full`) |
+| Scroll container | `w-full overflow-x-auto pb-xs` with `min-w-[640px]` inner container |
+| Legend swatches | `w-3 h-3 rounded-xs` with `.heatmap-scale-0` through `.heatmap-scale-3` |
+
+**Pattern notes:**
+- `showWeekdayLabels={false}` to maintain clean minimal layout without day-of-week clutter.
+- Legend swatches use token background classes (`bg-surface-muted`, `bg-primary-light`, `bg-primary-muted`, `bg-primary`).
+- Includes native SVG tooltips showing date and focused duration.
 
 #### History Empty State
-`components/history/EmptyHistory.tsx`
-<!-- ← Agent fills this in when built -->
+**File:** `components/history/EmptyHistory.tsx`
+**Purpose:** Empty state displayed when user has zero recorded sessions in history.
+**Last updated:** 2026-08-23
+
+| Property | Class |
+|---|---|
+| Container | `Card` (`flex flex-col items-center justify-center py-3xl px-xl text-center gap-md w-full`) |
+| Icon | `Lucide Clock (size 36 text-text-muted stroke-[1.5])` |
+| Title | `text-base font-semibold text-text-primary` |
+| Helper text | `text-sm text-text-secondary` |
+| CTA Button | `<Button variant="primary">Start a Focus Session</Button>` |
 
 ---
 

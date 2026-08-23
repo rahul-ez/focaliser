@@ -8,10 +8,60 @@ import { Badge } from '@/components/ui/Badge'
 import { DurationPicker } from '@/components/timer/DurationPicker'
 import { LabelInput } from '@/components/timer/LabelInput'
 import { PlayButton } from '@/components/timer/PlayButton'
+import { FocusCountdown } from '@/components/timer/FocusCountdown'
+import { BreakStopwatch } from '@/components/timer/BreakStopwatch'
+import { SessionEndAlert } from '@/components/timer/SessionEndAlert'
 
 export default function DevPreviewPage() {
   const [previewDuration, setPreviewDuration] = useState(1500)
   const [previewLabel, setPreviewLabel] = useState('')
+  const [sessionPreviewMode, setSessionPreviewMode] = useState<'none' | 'focus' | 'break' | 'alert'>('none')
+
+  if (sessionPreviewMode === 'focus') {
+    return (
+      <div className="relative">
+        <div className="absolute top-4 left-4 z-50">
+          <Button variant="secondary" onClick={() => setSessionPreviewMode('none')}>
+            Close Preview
+          </Button>
+        </div>
+        <FocusCountdown
+          remainingSeconds={previewDuration}
+          onTakeBreak={() => setSessionPreviewMode('break')}
+          onStopSession={() => setSessionPreviewMode('none')}
+        />
+      </div>
+    )
+  }
+
+  if (sessionPreviewMode === 'break') {
+    return (
+      <div className="relative">
+        <div className="absolute top-4 left-4 z-50">
+          <Button variant="secondary" onClick={() => setSessionPreviewMode('none')}>
+            Close Preview
+          </Button>
+        </div>
+        <BreakStopwatch
+          elapsedBreakSeconds={42}
+          onResumeFocus={() => setSessionPreviewMode('focus')}
+        />
+      </div>
+    )
+  }
+
+  if (sessionPreviewMode === 'alert') {
+    return (
+      <div className="relative">
+        <div className="absolute top-4 left-4 z-50">
+          <Button variant="secondary" onClick={() => setSessionPreviewMode('none')}>
+            Close Preview
+          </Button>
+        </div>
+        <SessionEndAlert onComplete={() => setSessionPreviewMode('none')} />
+      </div>
+    )
+  }
 
   return (
     <div className="max-w-5xl mx-auto px-xl py-2xl w-full flex flex-col gap-2xl">
@@ -23,6 +73,22 @@ export default function DevPreviewPage() {
           Visual test gallery for shared UI primitives and state variants.
         </p>
       </div>
+
+      {/* Fullscreen Session Previews */}
+      <section className="flex flex-col gap-md">
+        <h2 className="text-xl font-semibold text-text-primary">Fullscreen Session Screen Previews</h2>
+        <Card className="flex flex-wrap items-center gap-md">
+          <Button variant="primary" onClick={() => setSessionPreviewMode('focus')}>
+            Launch Focus State Preview
+          </Button>
+          <Button variant="secondary" onClick={() => setSessionPreviewMode('break')}>
+            Launch Break State Preview
+          </Button>
+          <Button variant="secondary" onClick={() => setSessionPreviewMode('alert')}>
+            Launch Session Complete Alert Preview
+          </Button>
+        </Card>
+      </section>
 
       {/* Timer & Home Controls */}
       <section className="flex flex-col gap-md">

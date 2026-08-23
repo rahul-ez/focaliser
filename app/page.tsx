@@ -19,7 +19,7 @@ export default async function HomePage() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-xl py-2xl w-full flex flex-col items-center">
+    <div className="max-w-5xl mx-auto px-lg md:px-xl py-xl md:py-2xl w-full flex flex-col items-center">
       <h1 className="text-3xl md:text-4xl font-bold text-text-primary leading-[1.1] text-center mb-xl">
         Ready to focus?
       </h1>
