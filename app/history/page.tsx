@@ -28,7 +28,7 @@ export default async function HistoryPage() {
   return (
     <div className="max-w-5xl mx-auto px-lg md:px-xl py-xl md:py-2xl w-full flex flex-col gap-2xl">
       <div>
-        <h1 className="text-2xl font-semibold text-text-primary leading-[1.2]">
+        <h1 className="text-2xl font-serif font-medium text-text-primary leading-[1.2]">
           Past Sessions
         </h1>
         <p className="text-sm text-text-secondary mt-0.5">

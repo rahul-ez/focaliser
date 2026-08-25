@@ -93,7 +93,7 @@ export function AuthForm({ mode }: AuthFormProps) {
   return (
     <Card className="w-full max-w-md mx-auto flex flex-col gap-lg">
       <div>
-        <h2 className="text-xl font-semibold text-text-primary mb-xs">
+        <h2 className="text-xl font-serif font-medium text-text-primary mb-xs">
           {isSignup
             ? 'Create your account'
             : isMagicLink

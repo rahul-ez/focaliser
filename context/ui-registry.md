@@ -114,19 +114,38 @@ This file is a living record of every UI component actually built in Focaliser. 
 |---|---|
 | Container | `bg-surface border-b border-border h-16 w-full sticky top-0 z-40` |
 | Inner wrapper | `max-w-5xl mx-auto px-lg md:px-xl h-full flex items-center justify-between` |
-| Logo text | `text-text-primary font-semibold text-base tracking-tight hover:opacity-90 transition-opacity` |
+| Logo text | `text-text-primary font-serif font-semibold text-lg tracking-tight hover:opacity-90 transition-opacity` |
 | Tab link (inactive) | `h-full inline-flex items-center text-sm transition-colors border-b-2 border-transparent text-text-secondary hover:text-text-primary font-medium` |
 | Tab link (active) | `h-full inline-flex items-center text-sm transition-colors border-b-2 border-primary text-primary font-semibold` |
 
 **Pattern notes:**
 - Client Component using `usePathname()`. Returns `null` when `pathname === '/session'`, `/login`, or `/signup` so distraction-free and auth flows remain zero-chrome.
 - Matches `max-w-5xl mx-auto px-lg md:px-xl` responsive grid constraint of page wrappers below it.
+- Sign out is a plain text action after a `w-px h-4 bg-border-light` divider, rather than a tab or boxed button.
 
 
 ---
 
 ### Home (`/`)
 `app/page.tsx`, `components/timer/`
+
+#### HomeSessionForm
+**File:** `components/timer/HomeSessionForm.tsx`
+**Purpose:** Minimal inline session-start form with duration and optional label fields plus a singular circular Play action.
+**Last updated:** 2026-08-25
+
+| Property | Class |
+|---|---|
+| Form layout | `flex items-center gap-lg w-full max-w-2xl mx-auto flex-wrap justify-center` |
+| Duration field | `font-mono tabular-nums text-2xl ... bg-transparent border-0 border-b border-border ... focus:border-primary` |
+| Label field | `font-sans text-base ... bg-transparent border-0 border-b border-border ... focus:border-primary` |
+| Start button | `w-12 h-12 rounded-full bg-primary text-primary-foreground ... hover:bg-primary-dark` |
+| Error message | `text-error text-xs` beneath the duration field |
+
+**Pattern notes:**
+- Owns the client-side form state but delegates persistence to `useFocusSession.startSession(duration, label)`.
+- Accepts `MM:SS` and `H:MM:SS`, validates the existing one-minute to twelve-hour bounds, and keeps the label nullable for the API.
+- This is the production home form. `DurationPicker`, `LabelInput`, and `PlayButton` remain only in `/dev/preview` for legacy component comparison.
 
 #### DurationPicker
 **File:** `components/timer/DurationPicker.tsx`
@@ -237,15 +256,15 @@ This file is a living record of every UI component actually built in Focaliser. 
 
 #### FocusTimeChart
 **File:** `components/analytics/FocusTimeChart.tsx`
-**Purpose:** Responsive Recharts bar chart displaying daily focus time in minutes using single series `--color-primary` (`#5B5FEF`).
+**Purpose:** Responsive Recharts bar chart displaying daily focus time in minutes using single series `--color-primary` (`#612D53`).
 **Last updated:** 2026-08-23
 
 | Property | Class |
 |---|---|
 | Card wrapper | `Card` (`flex flex-col gap-md w-full`) |
 | Section header | `text-sm font-semibold uppercase tracking-[0.04em] text-text-secondary` |
-| Axis tick text | `12px font-sans fill-[#8C8A86]` (matches `--color-text-muted`) |
-| Bar fill | `#5B5FEF` (`--color-primary`), `radius={[4, 4, 0, 0]}` |
+| Axis tick text | `12px font-sans fill-[#8B8888]` (matches `--color-text-muted`) |
+| Bar fill | `#612D53` (`--color-primary`), `radius={[4, 4, 0, 0]}` |
 | Tooltip | `bg-surface border border-border rounded-md px-md py-xs shadow-[var(--shadow-card)]` |
 
 **Pattern notes:**
@@ -358,7 +377,7 @@ This file is a living record of every UI component actually built in Focaliser. 
 | Property | Class |
 |---|---|
 | Card container | `Card` wrapper (`w-full max-w-md mx-auto flex flex-col gap-lg`) |
-| Form heading | `text-xl font-semibold text-text-primary mb-xs` |
+| Form heading | `text-xl font-serif font-medium text-text-primary mb-xs` |
 | Subtitle text | `text-sm text-text-secondary` |
 | Error notice | `<Card accentColor="error" className="py-sm px-md">` with `text-error text-xs font-medium` |
 | Success notice | `<Card accentColor="success" className="py-sm px-md">` with `text-success text-xs font-medium` |
@@ -389,8 +408,8 @@ This file is a living record of every UI component actually built in Focaliser. 
 **Typography patterns**
 | Use case | Classes |
 |---|---|
-| Hero heading ("Ready to focus?") | `text-4xl font-bold text-text-primary leading-[1.1]` (desktop), `text-3xl` at mobile breakpoint |
-| Section heading | `text-2xl font-semibold text-text-primary leading-[1.2]` |
+| Hero heading ("Ready to focus?") | `font-serif font-medium text-text-primary text-center leading-[1.15] mb-2xl text-[clamp(2.5rem,6vw,5rem)]` |
+| Section heading | `text-2xl font-serif font-medium text-text-primary leading-[1.2]` |
 | Card title | `text-lg font-semibold text-text-primary leading-[1.3]` |
 | Body text | `text-base font-normal text-text-primary leading-[1.5]` |
 | Secondary text | `text-sm font-normal text-text-secondary leading-[1.5]` |

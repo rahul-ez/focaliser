@@ -4,32 +4,33 @@
   /* ---------- Font ---------- */
   --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
 
   /* ---------- Page / surface backgrounds ---------- */
-  --color-background: #FAFAF9;
+  --color-background: #F3F4F4;
   --color-surface: #FFFFFF;
-  --color-surface-secondary: #F5F5F4;
-  --color-surface-tertiary: #EFEEEC;
-  --color-surface-muted: #E7E5E4;
+  --color-surface-secondary: #EAEBEB;
+  --color-surface-tertiary: #E0E1E1;
+  --color-surface-muted: #D4D5D5;
 
   /* ---------- Borders ---------- */
-  --color-border: #E5E3E0;
-  --color-border-light: #EFEDEA;
-  --color-border-muted: #D9D6D2;
+  --color-border: #DBD9D9;
+  --color-border-light: #E6E4E4;
+  --color-border-muted: #C9C6C6;
 
   /* ---------- Text colors ---------- */
-  --color-text-primary: #18181B;
-  --color-text-secondary: #52525B;
-  --color-text-muted: #8C8A86;
+  --color-text-primary: #2C2C2C;
+  --color-text-secondary: #5C5959;
+  --color-text-muted: #8B8888;
   --color-text-primary-dark: #FFFFFF;
   --color-text-secondary-dark: #D4D4D8;
   --color-text-muted-dark: #A1A1AA;
 
-  /* ---------- Primary accent (Indigo) ---------- */
-  --color-primary: #5B5FEF;
-  --color-primary-dark: #4548C9;
-  --color-primary-light: #EEF0FE;
-  --color-primary-muted: #C7CBFB;
+  /* ---------- Primary accent (Plum) ---------- */
+  --color-primary: #612D53;
+  --color-primary-dark: #853953;
+  --color-primary-light: #EDE3E8;
+  --color-primary-muted: #C9A9BC;
   --color-primary-foreground: #FFFFFF;
 
   /* ---------- Semantic: success ---------- */
@@ -99,7 +100,14 @@
   --shadow-card-hover: 0 4px 10px rgba(24, 24, 27, 0.08), 0 2px 4px rgba(24, 24, 27, 0.06);
 }
 
+html {
+  min-height: 100%;
+  margin: 0;
+}
+
 body {
+  min-height: 100dvh;
+  margin: 0;
   background-color: var(--color-background);
   color: var(--color-text-primary);
 }

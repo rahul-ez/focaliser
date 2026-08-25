@@ -13,9 +13,9 @@ import { Card } from '@/components/ui/Card'
 import type { DailyDataPoint } from '@/lib/db/analytics'
 
 // Explicit token color mappings per library-docs.md
-const PRIMARY_COLOR = '#5B5FEF' // --color-primary
-const TEXT_MUTED = '#8C8A86' // --color-text-muted
-const BORDER_COLOR = '#E5E3E0' // --color-border
+const PRIMARY_COLOR = '#612D53' // --color-primary
+const TEXT_MUTED = '#8B8888' // --color-text-muted
+const BORDER_COLOR = '#DBD9D9' // --color-border
 
 interface FocusTimeChartProps {
   data: DailyDataPoint[]
@@ -87,7 +87,7 @@ export function FocusTimeChart({ data }: FocusTimeChartProps) {
             />
             <Tooltip
               content={<CustomTooltip />}
-              cursor={{ fill: 'rgba(24, 24, 27, 0.04)' }}
+              cursor={{ fill: 'rgba(44, 44, 44, 0.04)' }}
             />
             <Bar
               dataKey="focusMinutes"

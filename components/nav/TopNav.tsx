@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import clsx from 'clsx'
 import { createClient } from '@/lib/supabase/client'
-import { Button } from '@/components/ui/Button'
 
 export function TopNav() {
   const pathname = usePathname()
@@ -38,7 +37,7 @@ export function TopNav() {
       <div className="max-w-5xl mx-auto px-lg md:px-xl h-full flex items-center justify-between">
         <Link
           href="/"
-          className="text-text-primary font-semibold text-base tracking-tight hover:opacity-90 transition-opacity"
+          className="text-text-primary font-serif font-semibold text-lg tracking-tight hover:opacity-90 transition-opacity"
         >
           Focaliser
         </Link>
@@ -65,14 +64,14 @@ export function TopNav() {
           >
             Past Sessions
           </Link>
-          <Button
-            variant="ghost"
-            context="chrome"
+          <div className="w-px h-4 bg-border-light" aria-hidden="true" />
+          <button
+            type="button"
             onClick={handleSignOut}
-            className="text-xs text-text-muted hover:text-text-primary"
+            className="text-text-secondary text-sm font-medium hover:text-text-primary transition-colors"
           >
             Sign out
-          </Button>
+          </button>
         </nav>
       </div>
     </header>

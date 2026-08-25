@@ -8,21 +8,23 @@ This file translates `ui-tokens.md` into direct build rules: every value below i
 
 ```tsx
 // app/layout.tsx
-import { Inter, JetBrains_Mono } from 'next/font/google'
+import { Inter, JetBrains_Mono, Playfair_Display } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' })
+const playfairDisplay = Playfair_Display({ subsets: ['latin'], weight: ['500', '600', '700'], variable: '--font-serif' })
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} ${playfairDisplay.variable}`}>
       <body className="font-sans">{children}</body>
     </html>
   )
 }
 ```
 
-- Apply both font variable classes on `<html>`, and apply `font-sans` as the default on `<body>`.
+- Apply all three font variable classes on `<html>`, and apply `font-sans` as the default on `<body>`.
+- Use `font-serif font-medium` only for the home hero, TopNav wordmark, Analytics/History top-level headings, and AuthForm heading.
 - `font-mono` is only ever applied explicitly, at the element level, to numerals (see Typography Hierarchy).
 - Never use `system-ui`, `-apple-system`, or `Arial` as the primary rendered font — those exist in the token stack only as fallback values, not as the intended typeface.
 
@@ -39,7 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 | Header (TopNav) height | `4rem` (64px), fixed exact value, not min-height |
 | Navigation type | Single top navbar, no sidebar, no bottom nav |
 
-Every page (`/`, `/analytics`, `/history`) uses the same content wrapper: `<div className="max-w-5xl mx-auto px-xl py-2xl">`. `/session` does not use this wrapper — it is fullscreen and ignores the max-width constraint entirely.
+`/analytics` and `/history` use the standard content wrapper. `/` uses a centered full-viewport hero with `min-h-[calc(100vh-4rem)]` and does not use the document wrapper. `/session` remains fullscreen and ignores the max-width constraint entirely.
 
 ---
 
@@ -50,7 +52,14 @@ Every page (`/`, `/analytics`, `/history`) uses the same content wrapper: `<div 
 - Inactive tab: `text-text-secondary font-medium`, no border.
 - Inactive tab hover: `hover:text-text-primary`. Never add an underline on hover — underline is reserved exclusively for the active state.
 - The logo/wordmark on the left of the navbar links to `/` and uses `text-text-primary font-semibold`, never `text-primary`.
+- The wordmark additionally uses `font-serif text-lg`. After the two tabs, render a `w-px h-4 bg-border-light` divider and a plain `text-text-secondary text-sm font-medium` Sign out button.
 - `<TopNav />` is never rendered on `/session` — confirmed by checking the route's `page.tsx` renders no navbar element at all, not a hidden or transparent one.
+
+## Home Page
+
+- The home page is a centered hero in the remaining viewport: `min-h-[calc(100vh-4rem)]`, with the serif heading above the session form.
+- The session form is one unboxed inline row with a duration field, optional label field, and circular Play button. It has no Card, border wrapper, shadow, helper copy, secondary CTA, or decorative illustration.
+- Duration accepts `MM:SS` or `H:MM:SS` and uses the existing one-minute to twelve-hour bounds. Validation errors appear only when validation fails.
 
 ---
 

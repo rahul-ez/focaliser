@@ -22,7 +22,7 @@ This file is the single source of truth for every color, font, spacing, and radi
 
 **Incorrect:**
 ```tsx
-<button style={{ backgroundColor: '#5B5FEF', padding: '12px 24px' }}>
+<button style={{ backgroundColor: '#612D53', padding: '12px 24px' }}>
   Start Session
 </button>
 ```
@@ -44,32 +44,33 @@ The second and third examples bypass the token system entirely — they use Tail
   /* ---------- Font ---------- */
   --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
 
   /* ---------- Page / surface backgrounds ---------- */
-  --color-background: #FAFAF9;
+  --color-background: #F3F4F4;
   --color-surface: #FFFFFF;
-  --color-surface-secondary: #F5F5F4;
-  --color-surface-tertiary: #EFEEEC;
-  --color-surface-muted: #E7E5E4;
+  --color-surface-secondary: #EAEBEB;
+  --color-surface-tertiary: #E0E1E1;
+  --color-surface-muted: #D4D5D5;
 
   /* ---------- Borders ---------- */
-  --color-border: #E5E3E0;
-  --color-border-light: #EFEDEA;
-  --color-border-muted: #D9D6D2;
+  --color-border: #DBD9D9;
+  --color-border-light: #E6E4E4;
+  --color-border-muted: #C9C6C6;
 
   /* ---------- Text colors ---------- */
-  --color-text-primary: #18181B;
-  --color-text-secondary: #52525B;
-  --color-text-muted: #8C8A86;
+  --color-text-primary: #2C2C2C;
+  --color-text-secondary: #5C5959;
+  --color-text-muted: #8B8888;
   --color-text-primary-dark: #FFFFFF;
   --color-text-secondary-dark: #D4D4D8;
   --color-text-muted-dark: #A1A1AA;
 
-  /* ---------- Primary accent (Indigo) ---------- */
-  --color-primary: #5B5FEF;
-  --color-primary-dark: #4548C9;
-  --color-primary-light: #EEF0FE;
-  --color-primary-muted: #C7CBFB;
+  /* ---------- Primary accent (Plum) ---------- */
+  --color-primary: #612D53;
+  --color-primary-dark: #853953;
+  --color-primary-light: #EDE3E8;
+  --color-primary-muted: #C9A9BC;
   --color-primary-foreground: #FFFFFF;
 
   /* ---------- Semantic: success ---------- */
@@ -204,8 +205,8 @@ The second and third examples bypass the token system entirely — they use Tail
 
 | Element | Size | Weight | Line height | Color token |
 |---|---|---|---|---|
-| Hero heading ("Ready to focus?") | 2.25rem / 36px (desktop), 1.875rem / 30px (mobile) | 700 | 1.1 | `text-text-primary` |
-| Section heading (Analytics, Past Sessions page titles) | 1.5rem / 24px | 600 | 1.2 | `text-text-primary` |
+| Hero heading ("Ready to focus?") | `clamp(2.5rem, 6vw, 5rem)` | 500 | 1.15 | `text-text-primary`, `font-serif` |
+| Section heading (Analytics, Past Sessions page titles) | 1.5rem / 24px | 500 | 1.2 | `text-text-primary`, `font-serif` |
 | Card title | 1.125rem / 18px | 600 | 1.3 | `text-text-primary` |
 | Body text | 1rem / 16px | 400 | 1.5 | `text-text-primary` |
 | Secondary text (descriptions, helper copy) | 0.875rem / 14px | 400 | 1.5 | `text-text-secondary` |
@@ -216,16 +217,17 @@ The second and third examples bypass the token system entirely — they use Tail
 | Fullscreen stopwatch numerals (Break State) | same size/family as timer numerals | 500 | 1 | `text-break` |
 | Stat number (Analytics averages, totals) | 1.875rem / 30px, `font-mono`, tabular-nums | 600 | 1.1 | `text-text-primary` |
 
-**Font family and import:** Inter is the default UI font (`font-sans`); JetBrains Mono is reserved for numerals (`font-mono`) so digits stay fixed-width and don't jitter as they change. Both are loaded via `next/font/google` in `app/layout.tsx`, not via a `<link>` tag or `@import`, so Next.js can self-host and subset them:
+**Font family and import:** Inter is the default UI font (`font-sans`); Playfair Display is reserved for the home hero, wordmark, and approved page headings; JetBrains Mono is reserved for numerals (`font-mono`). All are loaded via `next/font/google` in `app/layout.tsx`.
 
 ```tsx
 // app/layout.tsx
-import { Inter, JetBrains_Mono } from 'next/font/google'
+import { Inter, JetBrains_Mono, Playfair_Display } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' })
+const playfairDisplay = Playfair_Display({ subsets: ['latin'], weight: ['500', '600', '700'], variable: '--font-serif' })
 
-// Applied to <html> or <body> className: `${inter.variable} ${jetbrainsMono.variable}`
+// Applied to <html> className: `${inter.variable} ${jetbrainsMono.variable} ${playfairDisplay.variable}`
 ```
 
 ---
@@ -296,17 +298,23 @@ const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mon
 - Message: `text-text-secondary text-sm`
 - Optional CTA button: primary button variant
 
+**Home session form**
+- The home page uses a full-viewport centered composition rather than a card or standard document wrapper.
+- Duration and label fields use transparent backgrounds with only a tokenized bottom border. Duration uses `font-mono tabular-nums`; the label uses `font-sans`.
+- The home start action is the page's only filled circular control: `w-12 h-12 rounded-full bg-primary` with the Lucide Play icon.
+
 ---
 
 ## Invariants
 
 - Never use raw hex codes or Tailwind's default palette classes (`bg-white`, `text-black`, `bg-blue-500`, etc.) in component code — always use the tokens defined in this file.
-- Never use Tailwind arbitrary-value syntax to bypass a token (e.g. `bg-[#5B5FEF]`, `rounded-[8px]`, `p-[18px]`) — if the value isn't a token, it doesn't belong in the UI.
+- Never use Tailwind arbitrary-value syntax to bypass a token (e.g. `bg-[#612D53]`, `rounded-[8px]`, `p-[18px]`) — if the value isn't a token, it doesn't belong in the UI.
 - The fullscreen session screen (`/session`) uses only `--color-focus-*` and `--color-break*` tokens. It never uses `--color-background`, `--color-surface`, or any chrome-page text token — this screen must render pure black regardless of any theming added elsewhere later.
 - Every interactive element (button, input, link) must implement default, hover, focus, and disabled states using only tokens defined in Component Tokens above — no ad hoc one-off colors for any state.
 - A badge's background and text token must always come from the same semantic pair (e.g. `bg-success-light` pairs with `text-success`, never with `text-error`).
 - `font-mono` is reserved exclusively for numerals: timer digits, stopwatch digits, and analytics stat numbers. It is never used for body text, labels, or headings.
-- `font-sans` (Inter) is used for everything that is not a numeral display per the rule above.
+- `font-sans` (Inter) is used for everything that is not an approved serif heading or numeral display.
+- `font-serif` (Playfair Display) is used only for the home hero, TopNav wordmark, Analytics and History page headings, and AuthForm heading. It is always weight 500 or 600 and never italic.
 - The radius scale is fixed at five steps (`sm`, `md`, `lg`, `xl`, `full`); no other radius value is introduced.
 - All spacing must come from the `spacing-*` scale defined above; no arbitrary padding/margin values.
 - Focus states are never removed without a replacement — every focusable element must show a visible `focus-visible` ring using a token-based color.

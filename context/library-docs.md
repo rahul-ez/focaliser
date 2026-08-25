@@ -225,7 +225,7 @@ import { SESSION_END_ALERT_DURATION_MS } from '@/lib/constants'
 ```tsx
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts'
 
-const PRIMARY_COLOR = '#5B5FEF' // must match --color-primary in ui-tokens.md exactly
+const PRIMARY_COLOR = '#612D53' // must match --color-primary in ui-tokens.md exactly
 
 export function FocusTimeChart({ data }: { data: { date: string; focusMinutes: number }[] }) {
   return (
@@ -233,9 +233,9 @@ export function FocusTimeChart({ data }: { data: { date: string; focusMinutes: n
       <BarChart data={data}>
         <XAxis
           dataKey="date"
-          tick={{ fontSize: 12, fill: '#8C8A86' }} // matches --color-text-muted
+          tick={{ fontSize: 12, fill: '#8B8888' }} // matches --color-text-muted
         />
-        <YAxis tick={{ fontSize: 12, fill: '#8C8A86' }} />
+        <YAxis tick={{ fontSize: 12, fill: '#8B8888' }} />
         <Bar dataKey="focusMinutes" fill={PRIMARY_COLOR} radius={[4, 4, 0, 0]} />
       </BarChart>
     </ResponsiveContainer>
@@ -245,7 +245,7 @@ export function FocusTimeChart({ data }: { data: { date: string; focusMinutes: n
 
 **Rules:**
 - Recharts SVG props (`fill`, `stroke`, `tick.fill`) do not accept Tailwind class names or CSS variables directly in all browsers reliably — always pass the literal resolved hex value from `ui-tokens.md`, and keep a comment noting which token it mirrors so it can be updated if the token changes.
-- Every chart in this project uses a single series color (`--color-primary`, `#5B5FEF`) — never a multi-color/rainbow palette, per the near-monochrome design direction in `ui-tokens.md`.
+- Every chart in this project uses a single series color (`--color-primary`, `#612D53`) — never a multi-color/rainbow palette, per the near-monochrome design direction in `ui-tokens.md`.
 - Axis and label font size is always `12px` with the muted text color, matching the "Chart axis/legend label" row in `ui-rules.md`'s Typography Hierarchy.
 - No animation is enabled on chart mount (`isAnimationActive={false}`) — bars render immediately, consistent with the distraction-free, non-decorative design direction.
 

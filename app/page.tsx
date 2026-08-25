@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { getUserSettings } from '@/lib/db/settings'
-import { HomeClient } from '@/components/timer/HomeClient'
+import { HomeSessionForm } from '@/components/timer/HomeSessionForm'
 import { DEFAULT_DURATION_SECONDS } from '@/lib/constants'
 
 export const dynamic = 'force-dynamic'
@@ -19,11 +19,11 @@ export default async function HomePage() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-lg md:px-xl py-xl md:py-2xl w-full flex flex-col items-center">
-      <h1 className="text-3xl md:text-4xl font-bold text-text-primary leading-[1.1] text-center mb-xl">
+    <main className="w-full min-h-[calc(100dvh-4rem)] flex flex-col items-center justify-center px-xl">
+      <h1 className="font-serif font-medium text-text-primary text-center leading-[1.15] mb-2xl text-[clamp(2.5rem,6vw,5rem)]">
         Ready to focus?
       </h1>
-      <HomeClient initialDuration={initialDuration} />
-    </div>
+      <HomeSessionForm initialDuration={initialDuration} />
+    </main>
   )
 }

@@ -42,7 +42,7 @@ Most timer/pomodoro apps either (a) enforce a single rigid work/break interval s
 User lands on `/login` or `/signup` if unauthenticated. After signup/login, user is redirected to `/` (Home). No onboarding tutorial, tour, or setup wizard — the interface must be self-explanatory from the Home screen alone.
 
 **2. Home (`/`)**
-User sees the heading "Ready to focus?" in large bold type. Below it: an iOS-style scroll-wheel time picker (hours/minutes/seconds) defaulting to a sensible last-used or default duration, a text input for the session label (optional, freeform text, e.g. "Write chapter 3"), and a play button. Top-right shows the Analytics and Past Sessions tabs. User sets a duration, optionally types a label, and presses play.
+User sees the heading "Ready to focus?" in large serif type. Below it: an unboxed inline duration field accepting `MM:SS` or `H:MM:SS`, a text input for the optional session label, and a play button. Top-right shows the Analytics and Past Sessions tabs plus Sign out. User sets a duration, optionally types a label, and presses play.
 
 **3. Active Session (`/session`) — Focus State**
 On pressing play, the app transitions to a fullscreen view: black background, large white countdown numerals showing time remaining, counting down in real time. No other UI elements are visible by default. If the user's cursor hovers anywhere on this screen, the timer visually blurs and a clickable text "Take a break?" fades in near the center. Moving the cursor away restores the sharp countdown. Clicking "Take a break?" transitions to Break State.

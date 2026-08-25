@@ -23,7 +23,7 @@ export function AnalyticsClient({ weekly, monthly }: AnalyticsClientProps) {
       {/* Header with period toggle */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-md border-b border-border-light pb-lg">
         <div>
-          <h1 className="text-2xl font-semibold text-text-primary leading-[1.2]">
+          <h1 className="text-2xl font-serif font-medium text-text-primary leading-[1.2]">
             Analytics
           </h1>
           <p className="text-sm text-text-secondary mt-0.5">

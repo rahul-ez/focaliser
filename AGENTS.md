@@ -37,7 +37,7 @@ Do not skip a file. Do not write code before all nine have been read in this ses
 
 ## 2. Non-Negotiable Rules
 
-- Never use hardcoded color values or raw Tailwind default color classes (e.g. `bg-white`, `text-blue-500`, `#5B5FEF`). Use only tokens defined in `ui-tokens.md`.
+- Never use hardcoded color values or raw Tailwind default color classes (e.g. `bg-white`, `text-blue-500`, `#612D53`). Use only tokens defined in `ui-tokens.md`.
 - Update `progress-tracker.md` and `ui-registry.md` after every completed feature — before ending the turn, not as a follow-up.
 - Before using any third-party library: check for an installed skill first, then read `library-docs.md` for project-specific rules. Never rely on general training knowledge if either source covers it.
 - If the same problem persists after one corrective prompt, stop. Do not attempt a third fix blind. Run `/recover`.

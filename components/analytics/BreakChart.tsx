@@ -14,8 +14,8 @@ import type { DailyDataPoint } from '@/lib/db/analytics'
 
 // Explicit token color mappings per library-docs.md
 const BREAK_COLOR = '#D98C82' // --color-break
-const TEXT_MUTED = '#8C8A86' // --color-text-muted
-const BORDER_COLOR = '#E5E3E0' // --color-border
+const TEXT_MUTED = '#8B8888' // --color-text-muted
+const BORDER_COLOR = '#DBD9D9' // --color-border
 
 interface BreakChartProps {
   data: DailyDataPoint[]
